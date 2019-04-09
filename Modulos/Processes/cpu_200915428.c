@@ -22,7 +22,10 @@ static int meminfo_proc_show(struct seq_file *m, void *v)
     struct task_struct *task;
     int i = 0;
     int zombie = 0, suspendido = 0, detenido = 0, ejecucion = 0;
-    seq_printf(m, "{\"processes\":");
+    seq_printf(m, "\"carnet\": 200915428\n");
+    seq_printf(m, "\"nombre\": Robin Armando Salvatierra Bautista\n");
+    seq_printf(m, "\"Sistema Operativo\": Debian 9\n");
+    seq_printf(m, "\"processes\":\n\n");
     seq_printf(m, "\t[");
     seq_printf(m, "\n");
     for_each_process(task)
@@ -84,13 +87,13 @@ static int meminfo_proc_show(struct seq_file *m, void *v)
     seq_printf(m, "%d", zombie);
     seq_printf(m, "}");
     seq_printf(m, "\n");
-    seq_printf(m, "}");
+   // seq_printf(m, "}");
     return 0;
 }
 
 static void __exit final(void) //Salida de modulo
 {
-    printk(KERN_INFO "Cleaning Up.\n");
+    printk(KERN_INFO "Sistemas Operativos 1\n");
 }
 
 static int meminfo_proc_open(struct inode *inode, struct file *file)
@@ -106,7 +109,8 @@ static const struct file_operations meminfo_proc_fops = {
 };
 static int __init inicio(void) //Escribe archivo en /proc
 {
-    proc_create("m_processes_200915428", 0, NULL, &meminfo_proc_fops);
+    printk(KERN_INFO "Robin Salvatierra\n");
+    proc_create("cpu_200915428", 0, NULL, &meminfo_proc_fops);
     return 0;
 }
 module_init(inicio);

@@ -1,4 +1,4 @@
-obj-m+=m_processes_200915428.o
+obj-m+=cpu_200915428.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) modules
