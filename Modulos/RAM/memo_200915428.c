@@ -23,19 +23,22 @@ static int meminfo_proc_show(struct seq_file *m, void *v)
         pages[lru] = global_page_state(NR_LRU_BASE + lru);        
         //CREAR EL JSON, LA FUNCION K() devuelve el equivalente en kb,
         //se divide por 1024 para obtener los megas
-    seq_printf(m, "{");
-    seq_printf(m, "\"ram\": %8lu,",K(i.totalram)/1024);
-    seq_printf(m, "\"used\": %8lu,",(K(i.totalram)-K(i.freeram))/1024);
-    seq_printf(m, "\"free\": %8lu,",K(i.freeram)/1024);
-    seq_printf(m, "\"average\": %8lu",(((K(i.totalram)-K(i.freeram))/1024)*100 )/ (K(i.totalram)/1024));
-    seq_printf(m, "}");
+    seq_printf(m, "\"carnet\": 200915428\n");
+    seq_printf(m, "\"nombre\": Robin Armando Salvatierra Bautista\n");
+    seq_printf(m, "\"Sistema Operativo\": Debian 9\n");
+    seq_printf(m, "\"total ram\": %8lu,\n",K(i.totalram)/1024);
+    seq_printf(m, "\"total used\": %8lu,\n",(K(i.totalram)-K(i.freeram))/1024);
+    seq_printf(m, "\"total free\": %8lu,\n",K(i.freeram)/1024);
+    seq_printf(m, "\"average\": %8lu\n",(((K(i.totalram)-K(i.freeram))/1024)*100 )/ (K(i.totalram)/1024));
+   // seq_printf(m, "}");
 #undef K
     return 0;
 }
 
 static void __exit final(void) //Salida de modulo
 {
-    printk(KERN_INFO "Cleaning Up.\n");
+    //printk(KERN_INFO "Robin Salvatierra\n");
+    printk(KERN_INFO "Sistemas Operativos 1\n");
 }
 
 static int meminfo_proc_open(struct inode *inode, struct file *file)
@@ -51,7 +54,9 @@ static const struct file_operations meminfo_proc_fops = {
 };
 static int __init inicio(void) //Escribe archivo en /proc
 {
-    proc_create("m_ram_200915428", 0, NULL, &meminfo_proc_fops);
+    
+    printk(KERN_INFO "Robin Salvatierra\n");
+    proc_create("memo_200915428", 0, NULL, &meminfo_proc_fops);
     return 0;
 }
 module_init(inicio);
