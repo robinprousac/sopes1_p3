@@ -17,7 +17,7 @@ asmlinkage long hacked_sys_unlink(const char *pathname)
         return -1;
 }
         
-static int _ _init my_init (void)
+static int __init my_init (void)
 {
         /*obtain sys_call_table from hardcoded value
         we found in System.map*/
@@ -31,7 +31,7 @@ hacked_sys_unlink);
         return 0;
 }
 
-static void my_exit (void)
+static void __exit my_exit (void)
 /*restore original sys_unlink in sys_call_table*/
         xchg(&sys_call_table[_ _NR_unlink], original_sys_unlink);
 
