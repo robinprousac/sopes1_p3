@@ -24,7 +24,7 @@ int main( int argc, char **argv )
   }
  
   /* add watch to starting directory */
-  wd = inotify_add_watch(fd, "/home/joe", IN_CREATE | IN_MODIFY | IN_DELETE); 
+  wd = inotify_add_watch(fd, "/home/proy_v0", IN_CREATE | IN_MODIFY | IN_DELETE); 
  
   if (wd == -1)
     {
@@ -35,6 +35,8 @@ int main( int argc, char **argv )
       printf("Watching:: %s\n","/home/joe");
     }
  
+         FILE *fptr;
+
   /* do it forever*/
   while(1)
     {
@@ -46,32 +48,63 @@ int main( int argc, char **argv )
       }  
  
       while ( i < length ) {
+
+
+                fptr = fopen("program.txt","a");
+
+        
+
+                          if(fptr == NULL)
+                {
+                    printf("Error!");   
+                    return -1;           
+                }
+
+              //int num = 300;
+                  
+                   
         struct inotify_event *event = ( struct inotify_event * ) &buffer[ i ];
         if ( event->len ) {
           if ( event->mask & IN_CREATE) {
             if (event->mask & IN_ISDIR)
-              printf( "The directory %s was Created.\n", event->name );       
+              {
+                printf( "The directory %s was Created.\n", event->name );     
+               fprintf(fptr,"The directory %s was Created.\n", event->name);  
+              }
             else
-              printf( "The file %s was Created with WD %d\n", event->name, event->wd );       
+              {
+                printf( "The file %s was Created with WD %d\n", event->name, event->wd );  
+              fprintf(fptr,"The file %s was Created with WD %d\n", event->name, event->wd);   
+              }   
           }
            
           if ( event->mask & IN_MODIFY) {
-            if (event->mask & IN_ISDIR)
-              printf( "The directory %s was modified.\n", event->name );       
-            else
-              printf( "The file %s was modified with WD %d\n", event->name, event->wd );       
+            if (event->mask & IN_ISDIR){
+              printf( "The directory %s was modified.\n", event->name );    
+              fprintf(fptr,"The directory %s was modified.\n", event->name );     
+            }
+            else{
+              printf( "The file %s was modified with WD %d\n", event->name, event->wd );   
+              fprintf(fptr,"The file %s was modified with WD %d\n", event->name, event->wd );  
+            }   
           }
            
           if ( event->mask & IN_DELETE) {
-            if (event->mask & IN_ISDIR)
-              printf( "The directory %s was deleted.\n", event->name );       
-            else
-              printf( "The file %s was deleted with WD %d\n", event->name, event->wd );       
+            if (event->mask & IN_ISDIR){
+              printf( "The directory %s was deleted.\n", event->name );   
+              fprintf(fptr,"The directory %s was deleted.\n", event->name  ); 
+            }    
+            else{
+              printf( "The file %s was deleted with WD %d\n", event->name, event->wd );     
+              fprintf(fptr,"The file %s was deleted with WD %d\n", event->name, event->wd  );  
+            }
           }  
  
  
           i += EVENT_SIZE + event->len;
+          
         }
+        fclose(fptr);
       }
     }
  
